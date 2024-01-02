@@ -1,11 +1,12 @@
 # Lab 0
 ## Setting up the Microcontroller
 
-## Table of Contents
+### Table of Contents
 <br>
 
 | Step | Description | Points |
 |------|-------------|--------|
+| 0 | Initialize your git repository | 0 |
 | 1 | Place the Development Board on a Breadboard | 10 |
 | 2 | Install VScode and PlatformIO | 10 |
 | 3 | Configure PlatformIO for your board | 20 |
@@ -13,27 +14,18 @@
 | 5 | Build and Debug a Project | 20 |
 | 6 | Set up and interact with a Serial Port | 20 |
 | &nbsp; | Total: | 100 |
-<script>
-    document.querySelector("table").classList.add("toc");
-</script>
 <br>
 
 ## Instructional Objectives
 - To become familiar with the EE 69 laboratory, policies, lab stations, and equipment.
 - To get hands-on experience with the STM32F0DISCOVERY board, its accompanying components, and the PlatformIO IDE in VScode that you will use all semester.
 
-```
-attention_block
-<span style="text-align: center">
-<span style="color: red; font-weight: 700; font-size: xx-large">STOP.</span>
-
-This is an example of a note designed to get your attention. If you see this, read it carefully.
-
-**Make sure that you read this document in full. There are two ways in this lab to destroy your development board.**
-
-Some of you may have come directly to this lab without starting on <a href="../../submit/?item=hw0">homework 0</a>. You need to finish that first before completing any of the subsequent lab assignments.
-</span>
-```  
+> [!CAUTION]
+> HALT!  
+>   
+> This is an example of a note designed to get your attention. If you see this, read it carefully.  
+>   
+> **Make sure that you read this document in full. There are two ways in this lab to destroy your development board.**  
 
 ## Welcome to ECE 36200!
 
@@ -43,22 +35,50 @@ Lab 0 will have you set up your brand new STM32F0DISCOVERY board that you should
 
 If at any point you need help, you can add yourself to the lab queue as you did in ECE 270 via [labutils](https://engineering.purdue.edu/ece362/lab/labutils).
 
-```
-attention_block
-Please keep in mind the food-and-liquids policy of the lab, which is to bring absolutely no food or liquid with you to your lab sessions.  **Failure to follow this rule will result in a zero for the lab currently running in that week.**  
+> [!CAUTION]
+> Please keep in mind the food-and-liquids policy of the lab, which is to bring absolutely no food or liquid with you to your lab sessions.  **Failure to follow this rule will result in a penalty for the lab currently running in that week.**  
+>   
+> This rule applies no matter what is happening in lab, be it your lab session or an open lab session.  If you must bring a bottle or other such container, please drop it off at the sink at the back of the lab.  **This rule is in place to protect the very expensive equipment in lab, and to ensure that the lab remains a safe environment for everyone.**
 
-This rule applies no matter what is happening in lab, be it your lab session, someone else's, or an open lab session.  If you must bring a bottle or other such container, please drop it off at the sink in EE 69 by going through the back door of the lab, with the sink on your right as you enter.  
-```  
+> [!WARNING]
+> Past semesters of students' breadboards have had numerous issues with tombstoned holes, which are holes that have been damaged by excessive pressure, typically from pushing in oscilloscope probes, which you may have done in prior classes.  If you have done this, or otherwise have had issues with your breadboard in the past, **we highly encourage you to replace it as soon as possible**.  Because the labs will build on each other, it will be extremely difficult for you to debug problems with your breadboard as you get to later labs.  A good replacement is the Makeronics breadboard (available for about $35 on Amazon).  
+
+## Step 0: Initialize your git repository
+
+By now, you should have reviewed the content in the Intro To Git assignment in your ECE 362 GitHub Classroom to familiarize yourselves with git.  At this point, you should know how to:
+- Create a new repository;
+- Clone an existing repository to your computer;
+- Add changes, commit them to your local repository, and push them to the remote repository;
+
+git is a powerful versioning tool that you should make use of to keep track of changes to your code.  Commits are also how we determine your individual effort on each lab assignment.  **You must commit your code for each lab to your respective git repository at each step of the lab, not just at the end of the lab.**   Committing and pushing your code at each step also ensures that you have a backup of your code in case something goes wrong.
+
+Work for this class can be quite time-consuming, and so you need to develop a flow for doing these labs both at home, and in lab.  **If you attempt to do the labs entirely in lab, you will have a very hard time completing them.  Always start early, and at home.**
+
+Regardless of whether you are working on your own Windows/macOS/Linux computer or on a lab machine, you will be able to **clone** this repository to your own computer.  Make sure to do this on the computer on which you will be doing your lab, as you will be committing and pushing your code for this lab to this repository.  For speed and ease of use, we highly recommend using SSH and public/private keys.  Generate your keys by following [this guide](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent).  Once you have your key, read [this](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account) to learn how to add keys to your account.
+
+When you are working on your own home computer, **always remember to commit and push before you stop working and need to head to lab.**  The most basic commands to do this are:
+
+```bash
+# make a simple change, like creating a file first.  And then run:
+git add .
+git commit -m "A descriptive commit message"
+git push
+```
+
+If you are on Windows, it is possible to use PowerShell to do this.  If you are on macOS or Linux, you can use a terminal.  `cd` (change directory) to the downloaded folder, and run these commands.  Make sure to change the commit message to include the step number, and a brief description of what you did in that step.   Our intention here is to get you used to the command line and git.
+
+> [!IMPORTANT]
+> At this stage, you should have cloned this repository to your computer/lab machine, and be able to make a change, and then add, commit and push it to your repository.
 
 ## Step 1: Place the Development Board on a Breadboard
 
-Open your ECE 362 lab kit and find the STM32F091RCT microcontroller development board. It should look like the one in the image below.
+Open your ECE 362 lab kit and find the STM32F091RCT6 microcontroller development board. It should look like the one in the image below.
 
 <div class="center">
     <img src="img1.jpeg" style="width: 90vw; max-width: 800px">
 </div>
 
-Your ECE Master/Mini kit has a large, four-panel breadboard similar to the one pictured below.    Place the devboard so that it is on the bottom of the second panel, shown below.  (You can ignore your instructor's mess on the top two panels!)
+Your ECE Master/Mini kit has a large, four-panel breadboard similar to the one pictured below.  Place the devboard so that it is on the bottom of the second panel, shown below.  (You can ignore your instructor's mess on the top two panels!)
 
 <div class="center">
     <img src="img2.jpeg" style="width: 90vw; max-width: 800px">
@@ -80,11 +100,12 @@ If you haven't already used it for a prior class, download Visual Studio Code (c
 
 Once you have downloaded and installed VScode, open it up and click on the Extensions icon on the left side of the window.  Search for PlatformIO and install the PlatformIO IDE extension.  This will allow you to use PlatformIO from within VScode.  Once you have installed the extension, reload the VScode window so that the extension starts setting itself up.  Once it's done, click the newly added PlatformIO logo in the left sidebar.
 
-<div class="center">
-    <video src="vscode-platformio.webm" style="width: 90vw; max-width: 800px" controls></video>
-</div>
+https://github.com/ece362-purdue/lab0-intro/assets/12859429/f08482a4-0a33-4cb7-92a0-53247c201835
 
 If it shows the sidebar, it should be good to go.  Click on PIO Home > Open in the left sidebar to show the main window.
+
+> [!IMPORTANT]
+> If you are on Windows, you will need one more thing to get PlatformIO to work.  Download and install Zadig from https://zadig.akeo.ie/.  Use it to convert the STLink driver to WinUSB.  See this [forum post](https://community.platformio.org/t/esp32-pio-unified-debugger/4541/20) to figure this out - not all steps may apply since this is for an ESP32.
 
 ## Step 3: Configure PlatformIO for your board
 
@@ -94,7 +115,9 @@ In the PlatformIO IDE window that appears, click New Project.  In the window tha
 - ST Nucleo F091RC as the board, and;
 - CMSIS as the framework.
 
-You can pick the default location if you wish, but make sure to hover over the Help icon to keep track of where it is.  We'll have you back up your code so that you can keep track of it more easily.  Click Finish to create the project.  
+Set the project location to be `lab0` in your respective `lab-0-intro-username` repository.
+
+Remember to add, commit and push your code to your `lab-0` repository.  Click Finish.
 
 It will take a while to download all the tools for you to use.  Once it is complete, it will ask you to restart VScode.  When you do so, the window will refresh, and you'll see whatever file you had open, along with the PlatformIO Home page.  Close the home page tab.
 
@@ -123,9 +146,7 @@ monitor_eol = LF
 
 Next, open your Explorer (it's the top icon with a picture of files on it, or you can press Ctrl-Shift-E), and create a new file called openocd.cfg.  
 
-<div class="center">
-    <video src="createfile.webm" style="width: 90vw; max-width: 900px" controls></video>
-</div>
+https://github.com/ece362-purdue/lab0-intro/assets/12859429/8c4d4b1e-6542-4941-a51c-fa179cef30a7
 
 In this file, type the following:
 
@@ -183,6 +204,9 @@ void internal_clock()
 
 This code initializes an internal PLL, or phase-locked loop, to make use of the external crystal on our custom STM32 boards to generate a 48MHz clock.  This is the maximum clock speed of the STM32F0 series, and we'll use it for our labs.  We'll also use this code to initialize the clock in our labs, so it's good to have it in a separate file.  PlatformIO will automatically include all your source code for you, as long as it is in the `src` folder.
 
+> [!IMPORTANT]
+> Commit all your code and push it to your repository now.  Use a descriptive commit message, eg. Step 3 code.
+
 ## Step 4: Writing microcontroller code in C
 
 We've now configured our project to use the STM32F0DISCOVERY board, and we've added code to initialize a faster clock.  Let's now write some code to test it out.
@@ -190,6 +214,9 @@ We've now configured our project to use the STM32F0DISCOVERY board, and we've ad
 Under the `src` folder, create a new file called `main.c`.  In it, write a `main` function in C to create two `int` variables `x` and `y`, and in an infinite for loop, increment `x` until it reaches 10.  When `x` reaches 10, increment `y` and reset `x` to 0.  (Just a silly example to test our debugger).  Press Ctrl-S to save.
 
 (We won't call the `internal_clock` function yet - we're just testing the debugger for now.)
+
+> [!IMPORTANT]
+> Commit all your code and push it to your repository now.  Use a descriptive commit message that mentions the step number.
 
 ## Step 5: Build and Debug a Project
 
@@ -216,9 +243,7 @@ Debugging does the same process as flashing your microcontroller, but instead of
 
 Here's the debugging process:
 
-<div class="center">
-    <video src="debugging.webm" style="width: 90vw; max-width: 1200px" controls></video>
-</div>
+[debugging.webm](https://github.com/ece362-purdue/lab0-intro/assets/12859429/9e7194ec-b723-4e65-b689-e42691987440)
 
 To start debugging, press F5 (or Fn+F5, depending on your keyboard Fn lock), or click Debug > Start Debugging under the Quick Access sidebar on the PlatformIO tab.  You'll see the microcontroller be flashed again, but this time, a Debug Console will appear, and VScode will first take you to the Reset_Handler, before taking you to the first line of your `main` function.  By default, your debugger will pause here.
 
@@ -249,9 +274,10 @@ Note in the video that we set a breakpoint on the line where `y` gets incremente
 
 You can also hover over the variable to see its value, or add it to your Watch list to keep track of it.  You can even add expressions combining different variables!  Keep in mind that it cannot "watch" variables that are not in the current scope, so if you add variables from a function, and then return, you won't see those variables anymore.  Nonetheless it's a good option for global variables.
 
-<div class="center">
-    <video src="gdb.webm" style="width: 90vw; max-width: 700px" controls></video>
-</div>
+https://github.com/ece362-purdue/lab0-intro/assets/12859429/465ce398-a4fe-4d9e-8bd5-d11f5c6c857e
+
+> [!IMPORTANT]
+> If there are any changes as per `git status`, commit all your code and push it to your repository now.  Use a descriptive commit message that mentions the step number.
 
 ## Step 6: Set up and interact with a Serial Port
 
@@ -320,15 +346,21 @@ Go to the PlatformIO tab again, and this time, click 'Upload and Monitor' instea
 
 If you have more than one serial device connected, you may be asked to pick which one to use.  Pick the one that has "FTDI USB to UART" or similar in its name.
 
-```
-attention_block
-Show your TA your working serial connection to get fully checked off for this lab.
-```  
+> [!IMPORTANT]
+> Show your TA your working serial connection.  
+> Commit all your code and push it to your repository now.  Use a descriptive commit message that mentions the step number.  Show your TA that you have been pushing commits for each step.  
 
 ## Sign Your Breadboard
 
-If you haven't done so already, your TA will hand you a silver sharpie that so that you can write your username at the top of the breadboard.  If the breadboard was used by someone else whose username is on it, cross out the previous username. 
+If you haven't done so already, your TA will hand you a silver sharpie that so that you can write your username at the top of the breadboard.  They will then sign it themselves.  If the breadboard was used by someone else whose username is on it, cross out the previous username. 
+
+## Submit your work to Gradescope
+
+Submit your work to the [Lab 0](https://www.gradescope.com/courses/689962/assignments/3843769) assignment on Gradescope **before the beginning of your lab section next week**.  Ensure that your PlatformIO code has been added and pushed in your GitHub repository.  
 
 ## Lab Station Clean-up
 
 At this point, you are free to leave. Please make sure to close all windows, log out of the machine (click on your name on the top bar, and click Log Out, or similar), take all your belongings with you, and exit the lab. You must perform this clean-up procedure in every lab, or you will lose all points on the lab. 
+
+> [!IMPORTANT]
+> You must only leave after you have gotten your breadboard signed and you have cleaned up your station.  Do not leave behind plastic wrappers, breaboard wires, or any other trash as a result of setting up your breadboard in lab.  **Failure to clean up your station will result in a penalty for the lab currently running in that week.**
